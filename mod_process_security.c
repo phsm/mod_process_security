@@ -47,7 +47,7 @@
 #include <sys/capability.h>
 #include <limits.h>
 
-#ifdef MYSQL_THREAD_FORCE_EXIT
+#ifdef MYSQL_THREAD_FORCE_END
 #include <mysql/mysql.h>
 #endif
 
@@ -433,7 +433,7 @@ static void *APR_THREAD_FUNC process_security_thread_handler(apr_thread_t *threa
   thread_on = 1;
 
   if (process_security_set_cap(r) < 0) {
-    #ifdef MYSQL_THREAD_FORCE_EXIT
+    #ifdef MYSQL_THREAD_FORCE_END
     mysql_thread_end();
     #endif
     apr_thread_exit(thread, HTTP_INTERNAL_SERVER_ERROR);
@@ -442,7 +442,7 @@ static void *APR_THREAD_FUNC process_security_thread_handler(apr_thread_t *threa
   if (conf->keep_open_enable == ON) {
     fd = open(r->filename, O_RDONLY);
     if (fd == -1) {
-      #ifdef MYSQL_THREAD_FORCE_EXIT
+      #ifdef MYSQL_THREAD_FORCE_END
       mysql_thread_end();
       #endif
       apr_thread_exit(thread, HTTP_INTERNAL_SERVER_ERROR);
@@ -458,7 +458,7 @@ static void *APR_THREAD_FUNC process_security_thread_handler(apr_thread_t *threa
   if (result == DECLINED)
     result = HTTP_INTERNAL_SERVER_ERROR;
 
-  #ifdef MYSQL_THREAD_FORCE_EXIT
+  #ifdef MYSQL_THREAD_FORCE_END
   mysql_thread_end();
   #endif
   apr_thread_exit(thread, result);
