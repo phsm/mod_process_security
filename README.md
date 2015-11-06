@@ -10,7 +10,7 @@ apxs -i -c -l cap mod_process_security.c
 ```
 If you want to enable dirty fix of [my_thread_global_end() issue](https://github.com/matsumoto-r/mod_process_security/issues/3), use this command to build:
 ```
-apxs -i -c -lcap -lmysqlclient -L/usr/lib/mysql -DMYSQL_THREAD_FORCE_END=1 mod_process_security.c
+apxs -i -c -lcap -lmysqlclient -DMYSQL_THREAD_FORCE_END=1 mod_process_security.c
 ```
 
 - Add to httpd.conf or conf.d/process_security.conf
